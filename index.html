@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navega — Hacemos que te encuentren</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --azul:#378ADD;
+  --azul-osc:#185FA5;
+  --azul-prof:#0C447C;
+  --azul-claro:#85B7EB;
+  --azul-palido:#E6F1FB;
+  --azul-borde:#B5D4F4;
+  --ink:#0a1628;
+  --ink2:#1e3a5f;
+  --muted:#5a7a9a;
+  --blanco:#ffffff;
+  --fondo:#f7fafd;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--blanco);color:var(--ink);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 4rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(55,138,221,0.1);transition:all 0.3s}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:40px;height:40px}
+.logo-text{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--azul);letter-spacing:2px}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{font-size:0.82rem;font-weight:400;letter-spacing:0.08em;color:var(--ink2);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--azul)}
+.nav-cta{background:var(--azul)!important;color:#fff!important;padding:0.6rem 1.4rem;border-radius:6px;font-weight:500!important;transition:background 0.2s!important}
+.nav-cta:hover{background:var(--azul-osc)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px;border-radius:6px}
+.hamburger span{width:26px;height:2.5px;background:var(--azul);border-radius:2px;transition:0.3s;display:block}
+.mobile-menu{display:none;position:fixed;top:58px;left:0;right:0;background:#fff;border-bottom:1px solid var(--azul-borde);z-index:99;padding:1rem 1.5rem;flex-direction:column;gap:0.5rem;box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:0.95rem;color:var(--ink2);text-decoration:none;padding:0.75rem 0;border-bottom:1px solid var(--azul-palido);display:flex;align-items:center;gap:8px}
+.mobile-menu a:last-child{background:var(--azul);color:#fff;text-align:center;border-radius:8px;padding:0.85rem;border:none;margin-top:0.5rem;justify-content:center;font-weight:500}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:7rem 4rem 5rem;position:relative;overflow:hidden;background:var(--blanco)}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-circle-1{position:absolute;top:-120px;right:-80px;width:520px;height:520px;border-radius:50%;background:var(--azul-palido);opacity:0.6}
+.hero-circle-2{position:absolute;bottom:-60px;right:200px;width:280px;height:280px;border-radius:50%;background:var(--azul-borde);opacity:0.3}
+.hero-dots{position:absolute;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(var(--azul-borde) 1px, transparent 1px);background-size:32px 32px;opacity:0.3}
+.hero-content{position:relative;z-index:1;max-width:650px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--azul-palido);border:1px solid var(--azul-borde);color:var(--azul-osc);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.45rem 1rem;border-radius:100px;margin-bottom:2rem;font-weight:500}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--azul);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(3rem,6vw,5rem);font-weight:800;line-height:1.05;color:var(--ink);margin-bottom:1.5rem}
+h1 span{color:var(--azul)}
+.hero-sub{font-size:1.1rem;color:var(--muted);line-height:1.8;margin-bottom:2.5rem;font-weight:300;max-width:520px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--azul);color:#fff;padding:1rem 2.2rem;border-radius:8px;font-size:0.88rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--azul-osc);transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:var(--azul);padding:1rem 2.2rem;border-radius:8px;font-size:0.88rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;border:1.5px solid var(--azul-borde);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+.btn-secondary:hover{background:var(--azul-palido);border-color:var(--azul)}
+.hero-stats{display:flex;gap:3rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--azul-borde)}
+.hero-stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--azul);display:block;line-height:1}
+.hero-stat-label{font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;display:block}
+
+/* SECCIONES */
+section{padding:6rem 4rem}
+.section-tag{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--azul);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.section-tag::before{content:'';width:28px;height:1.5px;background:var(--azul);border-radius:2px}
+h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.1;color:var(--ink);margin-bottom:1rem}
+h2 em{color:var(--azul);font-style:normal}
+.section-lead{font-size:1rem;color:var(--muted);line-height:1.8;font-weight:300;max-width:540px;margin-bottom:3rem}
+
+/* SOBRE MÍ */
+#sobre{background:var(--fondo)}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.sobre-visual{position:relative}
+.sobre-card{background:var(--blanco);border:1px solid var(--azul-borde);border-radius:20px;padding:2.5rem;position:relative}
+.sobre-avatar{width:80px;height:80px;border-radius:50%;background:var(--azul);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.sobre-avatar svg{width:40px;height:40px}
+.sobre-nombre{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.sobre-rol{font-size:0.85rem;color:var(--azul);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:1.5rem}
+.sobre-skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
+.skill-tag{background:var(--azul-palido);color:var(--azul-osc);font-size:0.75rem;padding:4px 12px;border-radius:100px;font-weight:500}
+.sobre-texto p{font-size:0.95rem;color:var(--ink2);line-height:1.9;font-weight:300;margin-bottom:1.25rem}
+.sobre-texto p:last-child{margin-bottom:0}
+.sobre-valores{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.valor{background:var(--blanco);border:1px solid var(--azul-borde);border-radius:12px;padding:1.25rem}
+.valor-icon{width:36px;height:36px;background:var(--azul-palido);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:0.75rem}
+.valor-title{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+.valor-desc{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+/* PORTAFOLIO */
+#portafolio{background:var(--blanco)}
+.port-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.port-card{border:1px solid var(--azul-borde);border-radius:16px;overflow:hidden;transition:all 0.3s;cursor:pointer}
+.port-card:hover{transform:translateY(-4px);border-color:var(--azul)}
+.port-card-top{height:8px}
+.port-card-body{padding:1.75rem}
+.port-industry{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.port-name{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.port-desc{font-size:0.88rem;color:var(--muted);line-height:1.7;margin-bottom:1.25rem;font-weight:300}
+.port-feats{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+.port-feat{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--ink2)}
+.port-feat::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.port-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem}
+.port-tag{font-size:0.7rem;padding:3px 10px;border-radius:100px;font-weight:500}
+.port-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--azul-borde);padding-top:1.25rem}
+.port-meta span{display:block;font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.port-meta strong{font-size:0.88rem;color:var(--ink);font-weight:500}
+.port-link{font-size:0.8rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:6px;transition:all 0.2s}
+
+/* PLANES */
+#planes{background:var(--fondo)}
+.planes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px}
+.plan-card{background:var(--blanco);border:1px solid var(--azul-borde);border-radius:20px;overflow:hidden;transition:all 0.3s;display:flex;flex-direction:column}
+.plan-card.popular{border:2px solid var(--azul)}
+.plan-header{padding:2rem 2rem 1.5rem}
+.plan-nombre{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--blanco);letter-spacing:0.1em;text-transform:uppercase}
+.plan-precio{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;color:var(--blanco);line-height:1;margin:0.75rem 0 0.25rem}
+.plan-precio-sub{font-size:0.75rem;color:rgba(255,255,255,0.7);letter-spacing:0.1em}
+.plan-body{padding:1.75rem 2rem 2rem;display:flex;flex-direction:column;flex:1}
+.plan-items{list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem;flex:1}
+.plan-item{display:flex;align-items:flex-start;gap:10px;font-size:0.88rem;color:var(--ink2);line-height:1.5}
+.plan-check{width:18px;height:18px;border-radius:50%;background:var(--azul-palido);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.plan-check svg{width:10px;height:10px;color:var(--azul)}
+.plan-divider{border:none;border-top:1px dashed var(--azul-borde);margin:1rem 0}
+.btn-plan{display:block;text-align:center;padding:1rem;border-radius:10px;font-size:0.88rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;transition:all 0.2s}
+.btn-plan-primary{background:var(--azul);color:#fff}
+.btn-plan-primary:hover{background:var(--azul-osc)}
+.btn-plan-outline{background:transparent;color:var(--azul);border:1.5px solid var(--azul-borde)}
+.btn-plan-outline:hover{background:var(--azul-palido);border-color:var(--azul)}
+.popular-badge{display:inline-block;background:rgba(255,255,255,0.22);color:#fff;font-size:0.68rem;padding:3px 10px;border-radius:100px;letter-spacing:0.1em;margin-bottom:0.75rem}
+
+/* FAQ */
+.faq-item{background:var(--blanco);border:1px solid var(--azul-borde);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.2s}
+.faq-item:hover{border-color:var(--azul)}
+.faq-q{padding:1.25rem 1.5rem;font-size:0.95rem;font-weight:500;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-icon{font-size:1.4rem;color:var(--azul);font-weight:300;flex-shrink:0;transition:transform 0.3s}
+.faq-a{padding:0 1.5rem;max-height:0;overflow:hidden;font-size:0.88rem;color:var(--muted);line-height:1.8;font-weight:300;transition:all 0.3s}
+.faq-item.open .faq-a{max-height:200px;padding:0 1.5rem 1.25rem}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-item.open{border-color:var(--azul)}
+
+/* CONTACTO */
+#contacto{background:var(--azul-prof);position:relative;overflow:hidden}
+.contacto-bg{position:absolute;inset:0}
+.contacto-circle{position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.contacto-circle-2{position:absolute;bottom:-80px;left:100px;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,0.03)}
+.contacto-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.contacto-info .section-tag{color:var(--azul-claro)}
+.contacto-info .section-tag::before{background:var(--azul-claro)}
+.contacto-info h2{color:#fff}
+.contacto-info h2 em{color:var(--azul-claro)}
+.contacto-info p{font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.8;font-weight:300;margin-bottom:2rem}
+.contacto-opciones{display:flex;flex-direction:column;gap:1rem}
+.contacto-opcion{display:flex;align-items:center;gap:1rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:1.25rem 1.5rem;text-decoration:none;transition:all 0.2s;color:inherit}
+.contacto-opcion:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)}
+.contacto-opcion-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contacto-opcion-label{font-size:0.7rem;color:rgba(255,255,255,0.5);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px}
+.contacto-opcion-val{font-size:0.95rem;font-weight:500;color:#fff}
+.contacto-form{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:2.5rem}
+.form-group{margin-bottom:1.25rem}
+.form-label{display:block;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:0.5rem}
+.form-input{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:0.85rem 1rem;font-size:0.9rem;color:#fff;font-family:'DM Sans',sans-serif;transition:border 0.2s;outline:none}
+.form-input::placeholder{color:rgba(255,255,255,0.3)}
+.form-input:focus{border-color:var(--azul-claro);background:rgba(255,255,255,0.12)}
+textarea.form-input{resize:vertical;min-height:120px}
+.btn-enviar{width:100%;background:var(--azul);color:#fff;border:none;padding:1rem;border-radius:8px;font-size:0.9rem;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background 0.2s;letter-spacing:0.06em;margin-top:0.5rem}
+.btn-enviar:hover{background:var(--azul-osc)}
+
+/* FOOTER */
+footer{background:var(--ink);padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.footer-logo-text{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:2px}
+.footer-slogan{font-size:0.78rem;color:rgba(255,255,255,0.4);letter-spacing:0.1em}
+.footer-right{font-size:0.78rem;color:rgba(255,255,255,0.4)}
+
+/* ANIMACIONES */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0.85rem 1.25rem;z-index:200}
+  .nav-links{display:none}
+  .hamburger{display:flex;z-index:201}
+  .logo-text{font-size:1.1rem}
+  .logo-icon svg{width:28px;height:28px}
+  .hero{padding:5.5rem 1.25rem 3rem}
+  .hero-stats{gap:1.25rem;flex-wrap:wrap}
+  .hero-stat-num{font-size:1.5rem}
+  section{padding:3.5rem 1.25rem}
+  .sobre-grid,.port-grid,.planes-grid,.contacto-inner{grid-template-columns:1fr}
+  .sobre-valores{grid-template-columns:1fr 1fr}
+  footer{padding:2rem 1.25rem;flex-direction:column;text-align:center}
+  .hero-circle-1{width:300px;height:300px;top:-60px;right:-60px}
+  .hero-circle-2{display:none}
+  .hero-cursor{display:none!important}
+  h1{font-size:2.4rem!important}
+  h2{font-size:1.8rem!important}
+  .planes-grid{grid-template-columns:1fr!important}
+  .preview-grid{grid-template-columns:1fr!important}
+  .pasos-grid{grid-template-columns:1fr!important}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#inicio" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 2L4 18L7.5 13.5L10 20L12.5 19L10 12.5L15 12.5Z" fill="#378ADD"/>
+        <circle cx="18" cy="4" r="2.2" fill="#85B7EB"/>
+        <circle cx="20" cy="9.5" r="1.4" fill="#B5D4F4"/>
+        <circle cx="15" cy="2" r="1.1" fill="#B5D4F4"/>
+      </svg>
+    </div>
+    <span class="logo-text">NAVEGA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre nosotros</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#como-funciona">¿Cómo funciona?</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#portafolio">Clientes</a></li>
+    <li><a href="#contacto" class="nav-cta">Contáctanos</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" id="hamburger" aria-label="Menú">
+    <span id="hb1"></span><span id="hb2"></span><span id="hb3"></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#sobre" onclick="toggleMenu()">Sobre nosotros</a>
+  <a href="#planes" onclick="toggleMenu()">Planes</a>
+  <a href="#como-funciona" onclick="toggleMenu()">¿Cómo funciona?</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#portafolio" onclick="toggleMenu()">Clientes</a>
+  <a href="#contacto" onclick="toggleMenu()">Contáctanos</a>
+</div>
+
+<!-- HERO -->
+<section id="inicio" class="hero">
+  <div class="hero-bg">
+    <div class="hero-dots"></div>
+    <div class="hero-circle-1"></div>
+    <div class="hero-circle-2"></div>
+  </div>
+  <div class="hero-content">
+    <h1>Diseño web que hace <span>crecer</span> tu negocio</h1>
+    <p class="hero-sub">Creamos páginas web profesionales para negocios que quieren ser encontrados por sus clientes en internet.</p>
+    <div class="hero-btns">
+      <a href="#planes" class="btn-primary">
+        Ver planes
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#portafolio" class="btn-secondary">Ver clientes</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">100%</span>
+        <span class="hero-stat-label">Clientes satisfechos</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">1 año</span>
+        <span class="hero-stat-label">Dominio incluido</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cursor decorativo grande -->
+  <div class="hero-cursor" style="position:absolute;right:12%;top:50%;transform:translateY(-50%);z-index:1;">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:200px;height:200px">
+      <path d="M4 2L4 18L7.5 13.5L10 20L12.5 19L10 12.5L15 12.5Z" fill="#378ADD"/>
+      <circle cx="18" cy="4" r="2.2" fill="#85B7EB"/>
+      <circle cx="20" cy="9.5" r="1.4" fill="#B5D4F4"/>
+      <circle cx="15" cy="2" r="1.1" fill="#B5D4F4"/>
+    </svg>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section id="sobre">
+  <div class="sobre-texto fade-up" style="max-width:700px">
+    <div class="section-tag">Sobre nosotros</div>
+    <h2>Tu negocio merece estar <em>en línea</em></h2>
+    <p>Somos un equipo de diseño web con experiencia ayudando a negocios a construir su presencia digital. Cada proyecto lo tratamos con la misma dedicación.</p>
+    <p>Nuestra misión es simple: que tus clientes te encuentren fácilmente en internet, con una página que refleje la calidad de tu negocio.</p>
+    <div class="sobre-valores">
+      <div class="valor">
+        <div class="valor-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.8 4.5H15l-3.6 2.7 1.4 4.3L9 11.2l-3.8 2.3 1.4-4.3L3 6.5h4.2z" fill="#378ADD"/></svg>
+        </div>
+        <div class="valor-title">Calidad</div>
+        <div class="valor-desc">Cada página diseñada con atención al detalle</div>
+      </div>
+      <div class="valor">
+        <div class="valor-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#378ADD" stroke-width="1.8"/><path d="M9 5v4l2.5 2.5" stroke="#378ADD" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="valor-title">Puntualidad</div>
+        <div class="valor-desc">Entrega en los tiempos acordados</div>
+      </div>
+      <div class="valor">
+        <div class="valor-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3l6 6-6 6" stroke="#378ADD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="valor-title">Sencillez</div>
+        <div class="valor-desc">Sin tecnicismos, todo claro y directo</div>
+      </div>
+      <div class="valor">
+        <div class="valor-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2C5.13 2 2 5.13 2 9s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 3.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 9.5c-2.33 0-4.31-1.46-5-3.5.69-2.04 2.67-3.5 5-3.5s4.31 1.46 5 3.5c-.69 2.04-2.67 3.5-5 3.5z" fill="#378ADD"/></svg>
+        </div>
+        <div class="valor-title">Soporte</div>
+        <div class="valor-desc">Te acompañamos después de la entrega</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes">
+  <div class="section-tag">Planes</div>
+  <h2>Elige el plan <em>ideal</em></h2>
+  <p class="section-lead">Precios claros, sin costos ocultos. Cancela cuando quieras.</p>
+
+  <!-- Toggle mensual/anual -->
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem">
+    <span id="lbl-mensual" style="font-size:0.88rem;font-weight:500;color:var(--azul)">Mensual</span>
+    <div onclick="togglePlan()" style="width:52px;height:28px;background:var(--azul);border-radius:100px;cursor:pointer;position:relative;transition:background 0.3s" id="toggle-btn">
+      <div id="toggle-dot" style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:left 0.3s"></div>
+    </div>
+    <span id="lbl-anual" style="font-size:0.88rem;font-weight:500;color:var(--muted)">Anual <span style="background:var(--azul-palido);color:var(--azul);font-size:0.72rem;padding:2px 8px;border-radius:100px;font-weight:500">2 meses gratis</span></span>
+  </div>
+
+  <div class="planes-grid">
+
+    <!-- PLAN ESENCIAL -->
+    <div class="plan-card fade-up">
+      <div class="plan-header" style="background:var(--azul-prof)">
+        <div class="popular-badge" style="visibility:hidden">-</div>
+        <div class="plan-nombre">Plan Esencial</div>
+        <div class="plan-precio"><span class="precio-mensual">$70.000</span><span class="precio-anual" style="display:none;font-size:1.9rem">$700.000</span></div>
+        <div class="plan-precio-sub"><span class="sub-mensual">por mes · COP</span><span class="sub-anual" style="display:none">al año · COP</span></div>
+      </div>
+      <div class="plan-body">
+        <ul class="plan-items">
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Página web activa</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Diseño responsive (móvil y PC)</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Dominio incluido</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Formulario de contacto</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Botón de WhatsApp</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Enlace a redes sociales</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Soporte básico</li>
+        </ul>
+        <a href="https://wa.me/573186608929?text=Hola!%20Me%20interesa%20el%20Plan%20Esencial%20de%20Navega" target="_blank" class="btn-plan btn-plan-primary">Quiero este plan</a>
+      </div>
+    </div>
+
+    <!-- PLAN COMPLETO -->
+    <div class="plan-card popular fade-up">
+      <div class="plan-header" style="background:var(--azul-prof)">
+        <div class="popular-badge">Más popular</div>
+        <div class="plan-nombre">Plan Completo</div>
+        <div class="plan-precio"><span class="precio-mensual">$100.000</span><span class="precio-anual" style="display:none;font-size:1.9rem">$1.000.000</span></div>
+        <div class="plan-precio-sub"><span class="sub-mensual">por mes · COP</span><span class="sub-anual" style="display:none">al año · COP</span></div>
+      </div>
+      <div class="plan-body">
+        <ul class="plan-items">
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Todo lo del Plan Esencial</li>
+          <hr class="plan-divider">
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Rediseño perfil de Instagram</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Rediseño perfil de Facebook</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Foto de portada y perfil</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Paleta de colores para redes</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>1 actualización de contenido/mes</li>
+        </ul>
+        <a href="https://wa.me/573186608929?text=Hola!%20Me%20interesa%20el%20Plan%20Completo%20de%20Navega" target="_blank" class="btn-plan btn-plan-primary">Quiero este plan</a>
+      </div>
+    </div>
+
+    <!-- PLAN FULL -->
+    <div class="plan-card fade-up">
+      <div class="plan-header" style="background:var(--azul-prof)">
+        <div class="popular-badge" style="background:rgba(255,255,255,0.2)">Premium</div>
+        <div class="plan-nombre">Plan Full</div>
+        <div class="plan-precio"><span class="precio-mensual">$150.000</span><span class="precio-anual" style="display:none;font-size:1.9rem">$1.500.000</span></div>
+        <div class="plan-precio-sub"><span class="sub-mensual">por mes · COP</span><span class="sub-anual" style="display:none">al año · COP</span></div>
+      </div>
+      <div class="plan-body">
+        <ul class="plan-items">
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Todo lo del Plan Completo</li>
+          <hr class="plan-divider">
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>SEO básico para Google</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>2 actualizaciones de contenido/mes</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Reporte mensual de visitas</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Galería de fotos</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Google Maps integrado</li>
+        </ul>
+        <a href="https://wa.me/573186608929?text=Hola!%20Me%20interesa%20el%20Plan%20Full%20de%20Navega" target="_blank" class="btn-plan btn-plan-primary">Quiero este plan</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PREVIEW PLANES -->
+<section id="preview" style="background:var(--blanco)">
+  <div class="section-tag">Vista previa</div>
+  <h2>Así se vería tu <em>página web</em></h2>
+  <p class="section-lead">Selecciona un plan para ver cómo luciría tu negocio en internet.</p>
+
+  <!-- Selector de plan -->
+  <div style="display:flex;gap:1rem;margin-bottom:3rem;flex-wrap:wrap">
+    <button onclick="showPreview('esencial')" id="btn-esencial" style="padding:0.6rem 1.5rem;border-radius:100px;border:1.5px solid var(--azul);background:var(--azul);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s">Plan Esencial</button>
+    <button onclick="showPreview('completo')" id="btn-completo" style="padding:0.6rem 1.5rem;border-radius:100px;border:1.5px solid var(--azul-borde);background:transparent;color:var(--azul);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s">Plan Completo</button>
+    <button onclick="showPreview('full')" id="btn-full" style="padding:0.6rem 1.5rem;border-radius:100px;border:1.5px solid var(--azul-borde);background:transparent;color:var(--azul);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s">Plan Full</button>
+  </div>
+
+  <div class="preview-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start">
+
+    <!-- MOCKUP PC -->
+    <div>
+      <p style="font-size:0.75rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem">Computador</p>
+      <div style="background:#e0e0e0;border-radius:12px 12px 6px 6px;padding:10px 10px 0">
+        <div style="display:flex;gap:5px;margin-bottom:8px;padding:0 4px">
+          <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:#ffbd2e"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:#28c840"></div>
+        </div>
+        <div style="background:#fff;border-radius:6px 6px 0 0;overflow:hidden;height:320px">
+
+          <!-- Preview Esencial -->
+          <div id="pc-esencial">
+            <div style="background:var(--azul-prof);padding:10px 16px;display:flex;justify-content:space-between;align-items:center">
+              <span style="color:#fff;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:2px">TU NEGOCIO</span>
+              <div style="display:flex;gap:10px"><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Inicio</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Servicios</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Contacto</span></div>
+            </div>
+            <div style="background:var(--azul-palido);padding:24px 16px;text-align:center">
+              <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:6px">Bienvenido a <span style="color:var(--azul)">Tu Negocio</span></div>
+              <div style="font-size:0.65rem;color:var(--muted);margin-bottom:12px">Descripción breve de tu negocio y lo que ofreces</div>
+              <div style="display:inline-block;background:var(--azul);color:#fff;font-size:0.6rem;padding:6px 14px;border-radius:6px">Contáctanos</div>
+            </div>
+            <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+              <div style="background:var(--fondo);border-radius:8px;padding:10px;text-align:center"><div style="font-size:0.6rem;font-weight:600;color:var(--ink);margin-bottom:4px">Servicio 1</div><div style="font-size:0.55rem;color:var(--muted)">Descripción</div></div>
+              <div style="background:var(--fondo);border-radius:8px;padding:10px;text-align:center"><div style="font-size:0.6rem;font-weight:600;color:var(--ink);margin-bottom:4px">Servicio 2</div><div style="font-size:0.55rem;color:var(--muted)">Descripción</div></div>
+              <div style="background:var(--fondo);border-radius:8px;padding:10px;text-align:center"><div style="font-size:0.6rem;font-weight:600;color:var(--ink);margin-bottom:4px">Servicio 3</div><div style="font-size:0.55rem;color:var(--muted)">Descripción</div></div>
+            </div>
+            <div style="padding:0 16px 16px;display:flex;align-items:center;justify-content:center;gap:8px">
+              <div style="background:#25D366;color:#fff;font-size:0.6rem;padding:6px 12px;border-radius:6px">WhatsApp</div>
+              <div style="font-size:0.55rem;color:var(--muted)">correo@tunegocio.com</div>
+            </div>
+          </div>
+
+          <!-- Preview Completo -->
+          <div id="pc-completo" style="display:none">
+            <div style="background:var(--azul-prof);padding:10px 16px;display:flex;justify-content:space-between;align-items:center">
+              <span style="color:#fff;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:2px">TU NEGOCIO</span>
+              <div style="display:flex;gap:10px"><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Inicio</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Servicios</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Galería</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Contacto</span></div>
+            </div>
+            <div style="background:var(--azul-prof);padding:24px 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center">
+              <div>
+                <div style="font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:800;color:#fff;margin-bottom:6px">Tu Negocio <span style="color:var(--azul-claro)">Profesional</span></div>
+                <div style="font-size:0.6rem;color:rgba(255,255,255,0.6);margin-bottom:10px">Descripción atractiva de tu negocio</div>
+                <div style="display:inline-block;background:var(--azul);color:#fff;font-size:0.6rem;padding:6px 12px;border-radius:6px">Ver servicios</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.1);border-radius:8px;height:80px;display:flex;align-items:center;justify-content:center"><span style="font-size:0.55rem;color:rgba(255,255,255,0.4)">Foto principal</span></div>
+            </div>
+            <div style="padding:12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:var(--fondo);border-radius:8px;padding:8px"><div style="font-size:0.6rem;font-weight:600;color:var(--ink);margin-bottom:3px">Instagram</div><div style="display:flex;gap:4px"><div style="width:24px;height:24px;background:var(--azul-borde);border-radius:4px"></div><div style="width:24px;height:24px;background:var(--azul-borde);border-radius:4px"></div><div style="width:24px;height:24px;background:var(--azul-borde);border-radius:4px"></div></div></div>
+              <div style="background:var(--fondo);border-radius:8px;padding:8px"><div style="font-size:0.6rem;font-weight:600;color:var(--ink);margin-bottom:3px">Facebook</div><div style="font-size:0.55rem;color:var(--muted)">Perfil rediseñado</div></div>
+            </div>
+          </div>
+
+          <!-- Preview Full -->
+          <div id="pc-full" style="display:none">
+            <div style="background:var(--azul-prof);padding:10px 16px;display:flex;justify-content:space-between;align-items:center">
+              <span style="color:#fff;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:2px">TU NEGOCIO</span>
+              <div style="display:flex;gap:8px"><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Inicio</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Servicios</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Galería</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Reseñas</span><span style="color:rgba(255,255,255,0.6);font-size:0.6rem">Contacto</span></div>
+            </div>
+            <div style="background:var(--azul-prof);padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
+              <div>
+                <div style="font-size:0.55rem;color:var(--azul-claro);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">⭐ 4.9 · 128 reseñas</div>
+                <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;color:#fff;margin-bottom:4px">Tu Negocio <span style="color:var(--azul-claro)">Premium</span></div>
+                <div style="font-size:0.55rem;color:rgba(255,255,255,0.6);margin-bottom:8px">La mejor experiencia para tus clientes</div>
+                <div style="display:flex;gap:6px"><div style="background:var(--azul);color:#fff;font-size:0.55rem;padding:4px 10px;border-radius:4px">Ver más</div><div style="background:#25D366;color:#fff;font-size:0.55rem;padding:4px 10px;border-radius:4px">WhatsApp</div></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.1);border-radius:8px;height:70px;display:flex;align-items:center;justify-content:center"><span style="font-size:0.5rem;color:rgba(255,255,255,0.4)">Foto principal</span></div>
+            </div>
+            <div style="padding:10px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+              <div style="background:var(--fondo);border-radius:6px;padding:6px;text-align:center"><div style="font-size:0.55rem;font-weight:600;color:var(--ink)">Galería</div></div>
+              <div style="background:var(--fondo);border-radius:6px;padding:6px;text-align:center"><div style="font-size:0.55rem;font-weight:600;color:var(--ink)">Reseñas</div></div>
+              <div style="background:var(--fondo);border-radius:6px;padding:6px;text-align:center"><div style="font-size:0.55rem;font-weight:600;color:var(--ink)">Mapa</div></div>
+            </div>
+            <div style="padding:0 16px;background:var(--fondo);margin:0 16px;border-radius:6px;padding:8px;display:flex;align-items:center;gap:6px"><div style="font-size:0.55rem;color:var(--muted)">📍 Encuéntranos en Google Maps</div></div>
+          </div>
+
+        </div>
+      </div>
+      <div style="background:#c8c8c8;height:14px;border-radius:0 0 8px 8px;margin:0 20px"></div>
+      <div style="background:#b0b0b0;height:6px;border-radius:0 0 4px 4px;margin:0 40px"></div>
+    </div>
+
+    <!-- MOCKUP CELULAR -->
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <p style="font-size:0.75rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;align-self:flex-start">Celular</p>
+      <div style="background:#2a2a2a;border-radius:32px;padding:12px;width:200px;box-shadow:0 8px 32px rgba(0,0,0,0.15)">
+        <div style="background:#1a1a1a;border-radius:20px;height:14px;width:60px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:#2a2a2a"></div></div>
+        <div style="background:#fff;border-radius:16px;overflow:hidden;height:360px">
+
+          <!-- Celular Esencial -->
+          <div id="cel-esencial">
+            <div style="background:var(--azul-prof);padding:8px 10px;display:flex;justify-content:space-between;align-items:center">
+              <span style="color:#fff;font-family:'Syne',sans-serif;font-size:0.55rem;font-weight:700;letter-spacing:1px">TU NEGOCIO</span>
+              <div style="width:16px;height:10px;display:flex;flex-direction:column;gap:2px"><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div></div>
+            </div>
+            <div style="background:var(--azul-palido);padding:16px 10px;text-align:center">
+              <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;color:var(--ink);margin-bottom:4px">Tu <span style="color:var(--azul)">Negocio</span></div>
+              <div style="font-size:0.5rem;color:var(--muted);margin-bottom:8px">Descripción de tu negocio aquí</div>
+              <div style="display:inline-block;background:var(--azul);color:#fff;font-size:0.5rem;padding:4px 10px;border-radius:4px">Contáctanos</div>
+            </div>
+            <div style="padding:10px;display:flex;flex-direction:column;gap:6px">
+              <div style="background:var(--fondo);border-radius:6px;padding:8px"><div style="font-size:0.55rem;font-weight:600;color:var(--ink);margin-bottom:2px">Servicio 1</div><div style="font-size:0.5rem;color:var(--muted)">Descripción del servicio</div></div>
+              <div style="background:var(--fondo);border-radius:6px;padding:8px"><div style="font-size:0.55rem;font-weight:600;color:var(--ink);margin-bottom:2px">Servicio 2</div><div style="font-size:0.5rem;color:var(--muted)">Descripción del servicio</div></div>
+              <div style="background:var(--fondo);border-radius:6px;padding:8px"><div style="font-size:0.55rem;font-weight:600;color:var(--ink);margin-bottom:2px">Servicio 3</div><div style="font-size:0.5rem;color:var(--muted)">Descripción del servicio</div></div>
+            </div>
+            <div style="padding:0 10px;display:flex;justify-content:center">
+              <div style="background:#25D366;color:#fff;font-size:0.5rem;padding:5px 12px;border-radius:4px;width:100%;text-align:center">Escríbenos por WhatsApp</div>
+            </div>
+          </div>
+
+          <!-- Celular Completo -->
+          <div id="cel-completo" style="display:none">
+            <div style="background:var(--azul-prof);padding:8px 10px;display:flex;justify-content:space-between;align-items:center">
+              <span style="color:#fff;font-family:'Syne',sans-serif;font-size:0.55rem;font-weight:700;letter-spacing:1px">TU NEGOCIO</span>
+              <div style="width:16px;height:10px;display:flex;flex-direction:column;gap:2px"><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div></div>
+            </div>
+            <div style="background:var(--azul-prof);padding:14px 10px">
+              <div style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;color:#fff;margin-bottom:4px">Tu Negocio <span style="color:var(--azul-claro)">Pro</span></div>
+              <div style="font-size:0.5rem;color:rgba(255,255,255,0.6);margin-bottom:6px">La mejor opción para tu negocio</div>
+              <div style="background:rgba(255,255,255,0.1);border-radius:6px;height:50px;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="font-size:0.45rem;color:rgba(255,255,255,0.4)">Foto principal</span></div>
+              <div style="display:inline-block;background:var(--azul);color:#fff;font-size:0.5rem;padding:4px 10px;border-radius:4px">Ver servicios</div>
+            </div>
+            <div style="padding:8px 10px">
+              <div style="font-size:0.55rem;font-weight:600;color:var(--ink);margin-bottom:6px">Redes sociales</div>
+              <div style="display:flex;gap:4px;margin-bottom:8px">
+                <div style="flex:1;background:var(--azul-palido);border-radius:6px;padding:6px;text-align:center"><div style="font-size:0.5rem;color:var(--azul)">Instagram</div></div>
+                <div style="flex:1;background:var(--azul-palido);border-radius:6px;padding:6px;text-align:center"><div style="font-size:0.5rem;color:var(--azul)">Facebook</div></div>
+              </div>
+              <div style="background:#25D366;color:#fff;font-size:0.5rem;padding:5px;border-radius:4px;text-align:center">WhatsApp</div>
+            </div>
+          </div>
+
+          <!-- Celular Full -->
+          <div id="cel-full" style="display:none">
+            <div style="background:var(--azul-prof);padding:8px 10px;display:flex;justify-content:space-between;align-items:center">
+              <span style="color:#fff;font-family:'Syne',sans-serif;font-size:0.55rem;font-weight:700;letter-spacing:1px">TU NEGOCIO</span>
+              <div style="width:16px;height:10px;display:flex;flex-direction:column;gap:2px"><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div><div style="height:1.5px;background:rgba(255,255,255,0.6);border-radius:2px"></div></div>
+            </div>
+            <div style="background:var(--azul-prof);padding:10px">
+              <div style="font-size:0.45rem;color:var(--azul-claro);margin-bottom:3px">⭐ 4.9 · 128 reseñas</div>
+              <div style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:800;color:#fff;margin-bottom:3px">Tu Negocio <span style="color:var(--azul-claro)">Premium</span></div>
+              <div style="background:rgba(255,255,255,0.1);border-radius:6px;height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:6px"><span style="font-size:0.45rem;color:rgba(255,255,255,0.4)">Foto principal</span></div>
+              <div style="display:flex;gap:4px"><div style="background:var(--azul);color:#fff;font-size:0.45rem;padding:3px 8px;border-radius:4px">Ver más</div><div style="background:#25D366;color:#fff;font-size:0.45rem;padding:3px 8px;border-radius:4px">WhatsApp</div></div>
+            </div>
+            <div style="padding:8px 10px;display:flex;flex-direction:column;gap:5px">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+                <div style="background:var(--fondo);border-radius:4px;padding:5px;text-align:center;font-size:0.45rem;color:var(--ink)">Galería</div>
+                <div style="background:var(--fondo);border-radius:4px;padding:5px;text-align:center;font-size:0.45rem;color:var(--ink)">Reseñas</div>
+                <div style="background:var(--fondo);border-radius:4px;padding:5px;text-align:center;font-size:0.45rem;color:var(--ink)">Mapa</div>
+              </div>
+              <div style="background:var(--fondo);border-radius:6px;padding:6px;display:flex;align-items:center;gap:4px"><div style="font-size:0.45rem;color:var(--muted)">📍 Ver en Google Maps</div></div>
+              <div style="background:var(--fondo);border-radius:6px;padding:6px"><div style="font-size:0.45rem;font-weight:600;color:var(--ink);margin-bottom:2px">Reseñas de clientes</div><div style="font-size:0.4rem;color:var(--muted)">"Excelente servicio" ⭐⭐⭐⭐⭐</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTES -->
+<section id="portafolio">
+  <div class="section-tag">Clientes</div>
+  <h2>Empresas que nos <em>eligieron</em></h2>
+  <p class="section-lead">Negocios que ya confían en Navega para su presencia digital.</p>
+  <div class="port-grid">
+
+    <div class="port-card fade-up">
+      <div class="port-card-top" style="background:#185FA5"></div>
+      <div class="port-card-body">
+        <div class="port-industry" style="color:#185FA5">Construcción · Inmobiliaria</div>
+        <div class="port-name">Monteleón S.A.S</div>
+        <div class="port-desc">Constructora de edificios residenciales en Bogotá. Desarrollamos el sitio web para su proyecto Celestia, un edificio de apartamentos de alta gama.</div>
+        <div class="port-feats">
+          <div class="port-feat"><span style="width:5px;height:5px;border-radius:50%;background:#378ADD;flex-shrink:0;margin-top:6px"></span>Hero de pantalla completa con galería de imágenes</div>
+          <div class="port-feat"><span style="width:5px;height:5px;border-radius:50%;background:#378ADD;flex-shrink:0;margin-top:6px"></span>Fichas técnicas por tipo de apartamento</div>
+          <div class="port-feat"><span style="width:5px;height:5px;border-radius:50%;background:#378ADD;flex-shrink:0;margin-top:6px"></span>Formulario de contacto y botón WhatsApp</div>
+        </div>
+        <div class="port-tags">
+          <span class="port-tag" style="background:#E6F1FB;color:#0C447C">Página web</span>
+          <span class="port-tag" style="background:#E6F1FB;color:#0C447C">Dominio</span>
+          <span class="port-tag" style="background:#E6F1FB;color:#0C447C">Plan Esencial</span>
+        </div>
+        <div class="port-footer">
+          <div class="port-meta">
+            <span>Sector</span>
+            <strong>Construcción · Bogotá</strong>
+          </div>
+          <a href="https://monteleonsas.github.io/test/" target="_blank" class="port-link" style="color:#185FA5;background:#E6F1FB">Ver sitio →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-card fade-up">
+      <div class="port-card-top" style="background:#e8006e"></div>
+      <div class="port-card-body">
+        <div class="port-industry" style="color:#993556">Repostería · Gastronomía</div>
+        <div class="port-name">Alfajad</div>
+        <div class="port-desc">Emprendimiento bogotano de repostería artesanal. Tortas, cheesecakes, brownies y alfajores. Presencia digital construida desde cero.</div>
+        <div class="port-feats">
+          <div class="port-feat"><span style="width:5px;height:5px;border-radius:50%;background:#D4537E;flex-shrink:0;margin-top:6px"></span>Catálogo visual de productos con precios</div>
+          <div class="port-feat"><span style="width:5px;height:5px;border-radius:50%;background:#D4537E;flex-shrink:0;margin-top:6px"></span>Pedidos directos por WhatsApp</div>
+          <div class="port-feat"><span style="width:5px;height:5px;border-radius:50%;background:#D4537E;flex-shrink:0;margin-top:6px"></span>Integración con Instagram</div>
+        </div>
+        <div class="port-tags">
+          <span class="port-tag" style="background:#FBEAF0;color:#72243E">Página web</span>
+          <span class="port-tag" style="background:#FBEAF0;color:#72243E">Dominio</span>
+          <span class="port-tag" style="background:#FBEAF0;color:#72243E">Plan Esencial</span>
+        </div>
+        <div class="port-footer">
+          <div class="port-meta">
+            <span>Sector</span>
+            <strong>Gastronomía · Bogotá</strong>
+          </div>
+          <a href="https://alfajad.github.io/alfajad/" target="_blank" class="port-link" style="color:#993556;background:#FBEAF0">Ver sitio →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section id="como-funciona" style="background:var(--azul-prof)">
+  <div class="section-tag" style="color:var(--azul-claro)"><span style="background:var(--azul-claro);width:28px;height:1.5px;display:inline-block;margin-right:10px"></span>Proceso</div>
+  <h2 style="color:#fff">Así de <em style="color:var(--azul-claro)">fácil</em> funciona</h2>
+  <p class="section-lead" style="color:rgba(255,255,255,0.55)">En 3 pasos tu negocio ya está en internet.</p>
+  <div class="pasos-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;max-width:900px;margin-top:1rem">
+
+    <div class="fade-up" style="position:relative">
+      <div style="width:56px;height:56px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.6 6.6 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.852L.057 23.571a.75.75 0 00.914.914l5.671-1.469A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" fill="#85B7EB"/></svg>
+      </div>
+      <div style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--azul-claro);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.75rem">Paso 01</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:0.75rem">Nos escribes</div>
+      <div style="font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300">Cuéntanos sobre tu negocio por WhatsApp. Te respondemos en menos de 24 horas con una propuesta.</div>
+      <!-- Flecha -->
+      <div style="display:none" class="paso-arrow"></div>
+    </div>
+
+    <div class="fade-up" style="position:relative">
+      <div style="width:56px;height:56px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#85B7EB" stroke-width="1.8"/><path d="M8 12h8M8 8h5M8 16h3" stroke="#85B7EB" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--azul-claro);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.75rem">Paso 02</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:0.75rem">Diseñamos tu página</div>
+      <div style="font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300">Creamos tu página profesional y te enviamos una vista previa para que apruebes el diseño antes de publicar.</div>
+    </div>
+
+    <div class="fade-up">
+      <div style="width:56px;height:56px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#85B7EB" stroke-width="1.8"/><path d="M8 12l3 3 5-5" stroke="#85B7EB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--azul-claro);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.75rem">Paso 03</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:0.75rem">La publicamos</div>
+      <div style="font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300">Tu página queda activa en internet con tu dominio. ¡Listo! Tus clientes ya pueden encontrarte en Google.</div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:3rem">
+    <a href="https://wa.me/573186608929?text=Hola!%20Quiero%20empezar%20con%20Navega" target="_blank" class="btn-primary">Empezar ahora
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--fondo)">
+  <div class="section-tag">Preguntas frecuentes</div>
+  <h2>Todo lo que necesitas <em>saber</em></h2>
+  <p class="section-lead">Resolvemos tus dudas antes de empezar.</p>
+  <div style="max-width:780px;display:flex;flex-direction:column;gap:0.75rem">
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Cuánto tiempo tarda en estar lista mi página? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Entre 5 y 7 días hábiles desde que nos envíes el contenido (textos, fotos y logo de tu negocio). Proyectos más complejos como el Plan Full pueden tomar hasta 10 días.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Qué pasa si quiero cancelar? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Puedes cancelar en cualquier momento. Solo debes avisarnos con 5 días de anticipación antes de tu próximo pago. No hay penalidades ni cobros adicionales.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Necesito saber de tecnología para tener mi página? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Para nada. Nosotros nos encargamos de todo el proceso técnico. Solo necesitas contarnos sobre tu negocio y nosotros hacemos el resto.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿El dominio es mío? <span class="faq-icon">+</span></div>
+      <div class="faq-a">El dominio está incluido en tu plan mensual. Mientras mantengas tu suscripción activa, el dominio permanece disponible para tu negocio.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Puedo ver cómo va quedando mi página antes de publicarla? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Sí. Te enviamos una vista previa para que la revises y nos des tu aprobación antes de publicarla. Tienes revisiones incluidas según tu plan.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Qué necesito tener listo para empezar? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Solo necesitas: el nombre de tu negocio, una descripción de lo que haces, fotos de tu negocio o productos, y tu logo si tienes. Si no tienes logo, podemos ayudarte a crearlo.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Puedo cambiar el diseño después? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Sí. Según tu plan tienes actualizaciones de contenido incluidas cada mes. Cambios grandes de diseño se cotizan por separado.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿La página funciona en celular? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Sí, todas nuestras páginas tienen diseño responsive — se ven perfectas en celular, tablet y computador.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Qué pasa si mi página se cae? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Nos avisas por WhatsApp y lo solucionamos lo antes posible. El soporte técnico está incluido en todos los planes.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Puedo agregar más secciones después? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Sí. Si quieres agregar secciones nuevas que no estaban en el plan original, las cotizamos según el trabajo requerido.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Trabajan con cualquier tipo de negocio? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Sí, trabajamos con todo tipo de negocios: restaurantes, salones, consultorios, tiendas, emprendimientos, constructoras y más.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Qué diferencia hay entre dominio y hosting? <span class="faq-icon">+</span></div>
+      <div class="faq-a">El dominio es la dirección de tu página (ej: tunegocio.com). El hosting es el espacio donde vive tu página. Ambos están incluidos en tu plan mensual.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">¿Me enseñan a usar la página? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Sí. Una vez publicada tu página te explicamos cómo funciona. Estamos disponibles por WhatsApp para cualquier duda.</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="contacto-bg">
+    <div class="contacto-circle"></div>
+    <div class="contacto-circle-2"></div>
+  </div>
+  <div class="contacto-inner">
+    <div class="contacto-info fade-up">
+      <div class="section-tag">Contacto</div>
+      <h2>¿Listo para que te <em>encuentren</em>?</h2>
+      <p>Cuéntanos sobre tu negocio y te respondemos en menos de 24 horas con una propuesta personalizada.</p>
+      <div class="contacto-opciones">
+        <a href="https://wa.me/573186608929" target="_blank" class="contacto-opcion">
+          <div class="contacto-opcion-icon" style="background:#25D366">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.6 6.6 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.852L.057 23.571a.75.75 0 00.914.914l5.671-1.469A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.68-.524-5.198-1.435l-.374-.223-3.865 1.001 1.025-3.762-.245-.387A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          </div>
+          <div>
+            <div class="contacto-opcion-label">WhatsApp</div>
+            <div class="contacto-opcion-val">Contáctanos</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contacto-form fade-up">
+      <form action="https://formspree.io/f/mlgaezra" method="POST">
+      <div class="form-group">
+        <label class="form-label">Tu nombre</label>
+        <input type="text" name="nombre" class="form-input" placeholder="Juan Pérez">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tu negocio</label>
+        <input type="text" name="negocio" class="form-input" placeholder="Nombre de tu empresa o emprendimiento">
+      </div>
+      <div class="form-group">
+        <label class="form-label">WhatsApp o correo</label>
+        <input type="text" name="contacto" class="form-input" placeholder="300 000 0000 o correo@ejemplo.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">¿Qué necesitas?</label>
+        <textarea name="mensaje" class="form-input" placeholder="Cuéntanos un poco sobre tu negocio y qué tipo de página necesitas..."></textarea>
+      </div>
+      <button type="submit" class="btn-enviar">Contáctanos →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Burbuja flotante WhatsApp -->
+<a href="https://wa.me/573186608929?text=Hola!%20Me%20interesa%20saber%20m%C3%A1s%20sobre%20Navega" target="_blank" style="position:fixed;bottom:28px;right:28px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:999;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform 0.2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.6 6.6 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.852L.057 23.571a.75.75 0 00.914.914l5.671-1.469A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.68-.524-5.198-1.435l-.374-.223-3.865 1.001 1.025-3.762-.245-.387A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 2L4 18L7.5 13.5L10 20L12.5 19L10 12.5L15 12.5Z" fill="#E6F1FB"/>
+        <circle cx="18" cy="4" r="2.2" fill="#85B7EB"/>
+        <circle cx="20" cy="9.5" r="1.4" fill="#B5D4F4"/>
+        <circle cx="15" cy="2" r="1.1" fill="#B5D4F4"/>
+      </svg>
+    </div>
+    <span class="footer-logo-text">NAVEGA</span>
+  </div>
+  <div class="footer-slogan">Hacemos que te encuentren · Bogotá, Colombia</div>
+  <div class="footer-right">© 2025 Navega</div>
+</footer>
+
+<script>
+function toggleFaq(el){
+  const isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
+  if(!isOpen) el.classList.add('open');
+}
+function showPreview(plan){
+  ['esencial','completo','full'].forEach(p=>{
+    document.getElementById('pc-'+p).style.display=p===plan?'block':'none';
+    document.getElementById('cel-'+p).style.display=p===plan?'block':'none';
+    const btn=document.getElementById('btn-'+p);
+    btn.style.background=p===plan?'var(--azul)':'transparent';
+    btn.style.color=p===plan?'#fff':'var(--azul)';
+    btn.style.borderColor=p===plan?'var(--azul)':'var(--azul-borde)';
+  });
+}
+function togglePlan(){
+  const anual=document.getElementById('toggle-dot').style.left==='27px';
+  document.getElementById('toggle-dot').style.left=anual?'3px':'27px';
+  document.getElementById('lbl-mensual').style.color=anual?'var(--azul)':'var(--muted)';
+  document.getElementById('lbl-anual').style.color=anual?'var(--muted)':'var(--azul)';
+  document.querySelectorAll('.precio-mensual,.sub-mensual').forEach(e=>e.style.display=anual?'':'none');
+  document.querySelectorAll('.precio-anual,.sub-anual').forEach(e=>e.style.display=anual?'none':'');
+}
+function toggleMenu(){
+  const m=document.getElementById('mobileMenu');
+  const open=m.classList.toggle('open');
+  document.getElementById('hb1').style.transform=open?'translateY(7px) rotate(45deg)':'none';
+  document.getElementById('hb2').style.opacity=open?'0':'1';
+  document.getElementById('hb3').style.transform=open?'translateY(-7px) rotate(-45deg)':'none';
+}
+function enviarWA(){
+  const nombre=document.querySelector('.form-input:nth-of-type(1)').value||'';
+  const negocio=document.querySelector('.form-input:nth-of-type(2)').value||'';
+  const contacto=document.querySelector('.form-input:nth-of-type(3)').value||'';
+  const msg=document.querySelector('textarea').value||'';
+  const texto=`Hola! Me contacto desde navega.co\nNombre: ${nombre}\nNegocio: ${negocio}\nContacto: ${contacto}\nMensaje: ${msg}`;
+  window.open('https://wa.me/573186608929?text='+encodeURIComponent(texto),'_blank');
+}
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
