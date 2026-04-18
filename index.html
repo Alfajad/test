@@ -325,16 +325,7 @@ footer{background:var(--ink);padding:2.5rem 4rem;display:flex;justify-content:sp
 <section id="planes">
   <div class="section-tag">Planes</div>
   <h2>Elige el plan <em>ideal</em></h2>
-  <p class="section-lead">Precios claros, sin costos ocultos. Cancela cuando quieras.</p>
-
-  <!-- Toggle mensual/anual -->
-  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem">
-    <span id="lbl-mensual" style="font-size:0.88rem;font-weight:500;color:var(--azul)">Mensual</span>
-    <div onclick="togglePlan()" style="width:52px;height:28px;background:var(--azul);border-radius:100px;cursor:pointer;position:relative;transition:background 0.3s" id="toggle-btn">
-      <div id="toggle-dot" style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:left 0.3s"></div>
-    </div>
-    <span id="lbl-anual" style="font-size:0.88rem;font-weight:500;color:var(--muted)">Anual <span style="background:var(--azul-palido);color:var(--azul);font-size:0.72rem;padding:2px 8px;border-radius:100px;font-weight:500">2 meses gratis</span></span>
-  </div>
+  <p class="section-lead">Cada negocio es diferente. Contáctanos y te damos una propuesta personalizada.</p>
 
   <div class="planes-grid">
 
@@ -343,8 +334,8 @@ footer{background:var(--ink);padding:2.5rem 4rem;display:flex;justify-content:sp
       <div class="plan-header" style="background:var(--azul-prof)">
         <div class="popular-badge" style="visibility:hidden">-</div>
         <div class="plan-nombre">Plan Esencial</div>
-        <div class="plan-precio"><span class="precio-mensual">$70.000</span><span class="precio-anual" style="display:none;font-size:1.9rem">$700.000</span></div>
-        <div class="plan-precio-sub"><span class="sub-mensual">por mes · COP</span><span class="sub-anual" style="display:none">al año · COP</span></div>
+        
+        
       </div>
       <div class="plan-body">
         <ul class="plan-items">
@@ -365,8 +356,8 @@ footer{background:var(--ink);padding:2.5rem 4rem;display:flex;justify-content:sp
       <div class="plan-header" style="background:var(--azul-prof)">
         <div class="popular-badge">Más popular</div>
         <div class="plan-nombre">Plan Completo</div>
-        <div class="plan-precio"><span class="precio-mensual">$100.000</span><span class="precio-anual" style="display:none;font-size:1.9rem">$1.000.000</span></div>
-        <div class="plan-precio-sub"><span class="sub-mensual">por mes · COP</span><span class="sub-anual" style="display:none">al año · COP</span></div>
+        
+        
       </div>
       <div class="plan-body">
         <ul class="plan-items">
@@ -376,7 +367,7 @@ footer{background:var(--ink);padding:2.5rem 4rem;display:flex;justify-content:sp
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Rediseño perfil de Facebook</li>
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Foto de portada y perfil</li>
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Paleta de colores para redes</li>
-          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>1 actualización de contenido/mes</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>1 actualización de contenido/año</li>
         </ul>
         <a href="https://wa.me/573170300181?text=Hola!%20Me%20interesa%20el%20Plan%20Completo%20de%20Navega" target="_blank" class="btn-plan btn-plan-primary">Quiero este plan</a>
       </div>
@@ -387,15 +378,15 @@ footer{background:var(--ink);padding:2.5rem 4rem;display:flex;justify-content:sp
       <div class="plan-header" style="background:var(--azul-prof)">
         <div class="popular-badge" style="background:rgba(255,255,255,0.2)">Premium</div>
         <div class="plan-nombre">Plan Full</div>
-        <div class="plan-precio"><span class="precio-mensual">$150.000</span><span class="precio-anual" style="display:none;font-size:1.9rem">$1.500.000</span></div>
-        <div class="plan-precio-sub"><span class="sub-mensual">por mes · COP</span><span class="sub-anual" style="display:none">al año · COP</span></div>
+        
+        
       </div>
       <div class="plan-body">
         <ul class="plan-items">
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Todo lo del Plan Completo</li>
           <hr class="plan-divider">
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>SEO básico para Google</li>
-          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>2 actualizaciones de contenido/mes</li>
+          <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>2 actualizaciones de contenido/año</li>
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Reporte mensual de visitas</li>
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Galería de fotos</li>
           <li class="plan-item"><div class="plan-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Google Maps integrado</li>
